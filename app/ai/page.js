@@ -7,7 +7,7 @@ export default function page() {
   return (
     <Stack spacing="10px">
         <Box>
-        <Image src={require("/public/ai.gif")} style={{margin:"auto", height:"200px", width:"200px"}} alt="reading"/>
+        <Image src={require("../../public/ai.gif")} style={{margin:"auto", height:"200px", width:"200px"}} alt="reading"/>
         </Box>
         <Box>
             <Center style={{margin:"20px"}}>
