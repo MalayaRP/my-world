@@ -9,7 +9,7 @@ export default function ToggleColorMode() {
       <Button onClick={() => toggleColorMode()}
       pos="absolute"
       top="2"
-      right="130"
+      right="120"
       m="2rem"
       >{colorMode ==="dark"? <SunIcon/>: <MoonIcon/>}</Button>
    
