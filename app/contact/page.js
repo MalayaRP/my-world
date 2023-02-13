@@ -27,9 +27,7 @@ export default function page() {
     
   // Client-side-only code
 
-    <HStack>
-   
-      <Box>
+    <div style={{margin="auto"}}>
       <Card maxW="sm">
       <CardBody>
       <form onSubmit={sendEmail}>
@@ -52,8 +50,7 @@ export default function page() {
       
 
     </Card>
-      </Box>
-    </HStack>
+      </div>
     
     
       
