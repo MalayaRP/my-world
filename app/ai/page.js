@@ -5,7 +5,7 @@ import { Center, Square, Circle } from '@chakra-ui/react'
 import { Stack, VStack, Hstack, Box } from '@chakra-ui/react'
 export default function page() {
   return (
-    if (typeof window !== "undefined") {
+    
   // Client-side-only code
 
     <Stack spacing="10px">
@@ -26,5 +26,5 @@ export default function page() {
             
         </Box>
     </Stack>
-  })
+  )
 }
