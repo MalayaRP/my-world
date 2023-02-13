@@ -12,7 +12,7 @@ import {
 import {CheckCircleIcon} from "@chakra-ui/icons"
 export default function page() {
   return (
-      if (typeof window !== "undefined") {
+     
   // Client-side-only code
 
     <HStack spacing="10px">
@@ -39,6 +39,6 @@ export default function page() {
   </ListItem>
 </List>
         </Box>
-    </HStack>}
+    </HStack>
   )
 }
