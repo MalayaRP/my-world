@@ -14,7 +14,7 @@ export default function page() {
   return (
     <HStack spacing="10px">
         <Box>
-        <Image src={require("/public/hobby.gif")} style={{margin:"left", height:"400px", width:"400px"}} alt="reading"/>
+        <Image src={require("../../public/hobby.gif")} style={{margin:"left", height:"400px", width:"400px"}} alt="reading"/>
         </Box>
         <Box>
         <List spacing={3}>
