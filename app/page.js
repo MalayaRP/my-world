@@ -7,8 +7,11 @@ import { Stack, HStack, VStack, Box } from '@chakra-ui/react'
 import Typewriter from 'typewriter-effect';
 
 export default function Home() {
-  const myRef = document.querySelector('.scrollable-div')
+  
   return (
+    if (typeof window !== "undefined") {
+  // Client-side-only code
+
     <>
     <Script src="https://3Dmol.org/build/3Dmol-min.js"></Script>     
 <Script src="https://3Dmol.org/build/3Dmol.ui-min.js"></Script>     
@@ -34,6 +37,6 @@ export default function Home() {
   </Box>
 </HStack>
 
-    </>
+    </>}
   )
 }
