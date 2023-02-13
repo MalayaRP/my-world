@@ -9,6 +9,9 @@ import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { Stack, HStack, Box } from '@chakra-ui/react'
 
 export default function page() {
+    if (typeof window !== "undefined") {
+  // Client-side-only code
+
     const sendEmail = (e) => {
         e.preventDefault();
     
@@ -18,9 +21,11 @@ export default function page() {
           }, (error) => {
               console.log(error.text);
           });
-          e.target.reset();}
+          e.target.reset();}}
           
   return (
+    if (typeof window !== "undefined") {
+  // Client-side-only code
 
     <HStack spacing="40%">
       <Box>
@@ -50,7 +55,7 @@ export default function page() {
 
     </Card>
       </Box>
-    </HStack>
+    </HStack>}
     
     
       
