@@ -15,7 +15,7 @@ export default function page() {
   return (
     <HStack>
       <Box>
-      <Image src={require("/public/chem.gif")} style={{margin:"auto", height:"300px", width:"300px"}} alt="chem"/>
+      <Image src={require("../../public/chem.gif")} style={{margin:"auto", height:"300px", width:"300px"}} alt="chem"/>
       </Box>
       <Box>
       <List spacing={3}>
