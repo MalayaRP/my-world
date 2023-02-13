@@ -14,7 +14,7 @@ export default function page() {
   return (
   // Client-side-only code
 
-    <HStack spacing="100px">
+    <HStack spacing="10px">
         <Box>
         <Image src={require("../../public/web.gif")} style={{margin:"left", height:"400px", width:"400px"}} alt="reading"/>
         </Box>
