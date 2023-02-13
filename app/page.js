@@ -9,7 +9,7 @@ import Typewriter from 'typewriter-effect';
 export default function Home() {
   
   return (
-    if (typeof window !== "undefined") {
+    
   // Client-side-only code
 
     <>
@@ -37,6 +37,6 @@ export default function Home() {
   </Box>
 </HStack>
 
-    </>}
+    </>
   )
 }
