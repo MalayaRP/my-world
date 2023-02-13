@@ -4,7 +4,6 @@ import { download } from "3dmol";
 import { createViewer } from "3dmol";
 import Script from "next/script"
 import { Stack, HStack, VStack, Box } from '@chakra-ui/react'
-import slide_text from "../components/slide_text"
 import Typewriter from 'typewriter-effect';
 
 export default function Home() {
