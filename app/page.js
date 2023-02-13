@@ -17,12 +17,12 @@ export default function Home() {
 
     <>
          
-<HStack spacing='10px'>
+<HStack spacing='1px'>
     <Box>
   <div style={{height: "300px", width: "300px", position: "relative" }}className='viewer_3Dmoljs' data-pdb='4IRC' data-backgroundcolor='0xffffff' data-spin='axis:y;speed:0.5' data-style='cartoon:color=spectrum' data-backgroundalpha="0"></div>
 
   </Box>
-  <Box >
+  <Box w='100%>
     <div style={{fontSize:"60px", fontFamily:"ariel", marginTop:"10px"}}>
     <Typewriter
   options={{
