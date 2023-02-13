@@ -52,8 +52,8 @@ import {
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
             <Text>
-              <Button as ="a" href="/"
-              marginTop="0" colorScheme="green">Home</Button>
+              <Button as ="a" href="/contact"
+              marginTop="0" colorScheme="green">Email Me</Button>
             </Text>
   
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -74,11 +74,11 @@ import {
               fontWeight={600}
               color={'white'}
               bg={'pink.400'}
-              href={'/contact'}
+              href={'/'}
               _hover={{
                 bg: 'pink.300',
               }}>
-              Email Me
+              Home
             </Button>
             <ToggleColorMode/>
           </Stack>
