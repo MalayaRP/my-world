@@ -27,10 +27,8 @@ export default function page() {
     
   // Client-side-only code
 
-    <HStack spacing="40%">
-      <Box>
-      
-      </Box>
+    <HStack>
+   
       <Box>
       <Card maxW="sm">
       <CardBody>
