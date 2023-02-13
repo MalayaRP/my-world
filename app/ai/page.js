@@ -5,6 +5,9 @@ import { Center, Square, Circle } from '@chakra-ui/react'
 import { Stack, VStack, Hstack, Box } from '@chakra-ui/react'
 export default function page() {
   return (
+    if (typeof window !== "undefined") {
+  // Client-side-only code
+
     <Stack spacing="10px">
         <Box>
         <Image src={require("../../public/ai.gif")} style={{margin:"auto", height:"200px", width:"200px"}} alt="reading"/>
@@ -23,5 +26,5 @@ export default function page() {
             
         </Box>
     </Stack>
-  )
+  })
 }
