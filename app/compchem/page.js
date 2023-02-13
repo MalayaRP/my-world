@@ -13,8 +13,8 @@ import {CheckCircleIcon} from "@chakra-ui/icons"
 import { Center } from '@chakra-ui/react'
 export default function page() {
   return (
-    if (typeof window !== "undefined") {
-  // Client-side-only code
+    
+
 
     <HStack>
       <Box>
@@ -40,7 +40,7 @@ export default function page() {
   </ListItem>
 </List>
       </Box>
-    </HStack>}
+    </HStack>
       
     
   )
