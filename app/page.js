@@ -19,7 +19,7 @@ export default function Home() {
          
 <HStack spacing='10px'>
     <Box>
-  <div style={{height: "600px", width: "600px", position: "relative" }}className='viewer_3Dmoljs' data-pdb='4IRC' data-backgroundcolor='0xffffff' data-spin='axis:y;speed:0.5' data-style='cartoon:color=spectrum' data-backgroundalpha="0"></div>
+  <div style={{height: "100px", width: "100px", position: "relative" }}className='viewer_3Dmoljs' data-pdb='4IRC' data-backgroundcolor='0xffffff' data-spin='axis:y;speed:0.5' data-style='cartoon:color=spectrum' data-backgroundalpha="0"></div>
 
   </Box>
   <Box >
