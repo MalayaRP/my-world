@@ -17,9 +17,9 @@ export default function Home() {
 
     <>
          
-<HStack spacing='1px'>
+<VStack spacing='1px'>
     <Box>
-  <div style={{height: "300px", width: "300px", position: "relative" }}className='viewer_3Dmoljs' data-pdb='4IRC' data-backgroundcolor='0xffffff' data-spin='axis:y;speed:0.5' data-style='cartoon:color=spectrum' data-backgroundalpha="0"></div>
+  <div style={{height: "200px", width: "200px", position: "relative" }}className='viewer_3Dmoljs' data-pdb='4IRC' data-backgroundcolor='0xffffff' data-spin='axis:y;speed:0.5' data-style='cartoon:color=spectrum' data-backgroundalpha="0"></div>
 
   </Box>
   <Box w='100%>
@@ -34,7 +34,7 @@ export default function Home() {
     </div>
   
   </Box>
-</HStack>
+</VStack>
 
     </>
   )
