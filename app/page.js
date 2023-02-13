@@ -10,7 +10,7 @@ export default function Home() {
   <>
     <Script src="https://3Dmol.org/build/3Dmol-min.js"></Script>     
 <Script src="https://3Dmol.org/build/3Dmol.ui-min.js"></Script></>
-  
+  </>
   return (
     
   // Client-side-only code
