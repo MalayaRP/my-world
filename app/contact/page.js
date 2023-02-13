@@ -27,7 +27,7 @@ export default function page() {
     
   // Client-side-only code
 
-    <div style={{margin="auto"}}>
+    <div style={{margin:"auto"}}>
       <Card maxW="sm">
       <CardBody>
       <form onSubmit={sendEmail}>
