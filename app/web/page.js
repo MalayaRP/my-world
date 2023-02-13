@@ -11,7 +11,9 @@ import {
   } from '@chakra-ui/react'
 import {CheckCircleIcon} from "@chakra-ui/icons"
 export default function page() {
-  return (
+  return (if (typeof window !== "undefined") {
+  // Client-side-only code
+
     <HStack spacing="100px">
         <Box>
         <Image src={require("../../public/web.gif")} style={{margin:"left", height:"400px", width:"400px"}} alt="reading"/>
@@ -44,6 +46,6 @@ export default function page() {
   </ListItem>
 </List>
         </Box>
-    </HStack>
+    </HStack>}
   )
 }
