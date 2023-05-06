@@ -6,7 +6,7 @@ import Script from "next/script"
 import { Stack, HStack, VStack, Box } from '@chakra-ui/react'
 import Typewriter from 'typewriter-effect';
 import dynamic from 'next/dynamic'
-function Home() {
+const Home = () => {
     <Script src="https://3Dmol.org/build/3Dmol-min.js"></Script>  
   return (
     <> 
