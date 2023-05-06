@@ -32,5 +32,5 @@ function Home() {
     </>
   )
 }
-export default dynamic(() => Promise.resolve(pagename),{ssr:false})
+export default dynamic(() => Promise.resolve(Home),{ssr:false})
 
