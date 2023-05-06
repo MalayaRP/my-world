@@ -5,8 +5,8 @@ import { createViewer } from "3dmol";
 import Script from "next/script"
 import { Stack, HStack, VStack, Box } from '@chakra-ui/react'
 import Typewriter from 'typewriter-effect';
-
-export default function Home() {
+import dynamic from 'next/dynamic'
+function Home() {
     <Script src="https://3Dmol.org/build/3Dmol-min.js"></Script>  
   return (
     <> 
@@ -32,3 +32,5 @@ export default function Home() {
     </>
   )
 }
+export default dynamic(() => Promise.resolve(pagename),{ssr:false})
+
