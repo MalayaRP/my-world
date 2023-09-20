@@ -44,7 +44,7 @@ function App() {
             <ListItem
               key={index}
               borderBottom="1px solid #ccc" // Add a border to separate notes
-              padding="4px" // Add some padding to notes
+              padding="1px" // Add some padding to notes
               width="80%" // Adjust the note width
             >
               {savedNote}
