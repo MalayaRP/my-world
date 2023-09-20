@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   VStack,
   Box,
@@ -12,8 +12,21 @@ import {
 } from '@chakra-ui/react';
 
 function App() {
-  const [note, setNote] = useState(''); // State to store the current note
-  const [notes, setNotes] = useState([]); // State to store all saved notes
+  const [note, setNote] = useState('');
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    // Load saved notes from localStorage on component mount
+    const savedNotes = JSON.parse(localStorage.getItem('notes'));
+    if (savedNotes) {
+      setNotes(savedNotes);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save notes to localStorage whenever the notes state changes
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }, [notes]);
 
   const handleNoteChange = (event) => {
     setNote(event.target.value);
@@ -21,8 +34,8 @@ function App() {
 
   const handleSaveNote = () => {
     if (note.trim() !== '') {
-      setNotes([...notes, note]); // Add the current note to the list of notes
-      setNote(''); // Clear the input field after saving
+      setNotes([...notes, note]);
+      setNote('');
     }
   };
 
