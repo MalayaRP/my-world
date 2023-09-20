@@ -38,7 +38,7 @@ function App() {
       <VStack spacing={4}>
         <Box>
           <Text fontSize="xl">
-            {isGameOver ? 'Congratulations! You Win!' : 'Guess the Next Letter:'}
+            {isGameOver ? 'Congratulations! You Win!' : 'Guess the Special Letter:'}
           </Text>
           <Text fontSize="2xl">{isGameOver ? sequence : sequence.substr(0, currentLetterIndex)}</Text>
         </Box>
