@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { VStack, Box, Button, Input, Text } from '@chakra-ui/react';
-import Typewriter from 'typewriter-effect';
 
 export default function QuestionAnsweringApp() {
   const [question, setQuestion] = useState('');
@@ -45,13 +44,9 @@ export default function QuestionAnsweringApp() {
   return (
     <VStack spacing="4" align="center">
       {/* Animated Introduction */}
-      <Typewriter
-        options={{
-          strings: [questions[introIndex]],
-          autoStart: true,
-          loop: true,
-        }}
-      />
+      <div className="animated-text">
+        {questions[introIndex]}
+      </div>
       <br />
 
       {/* Text Input */}
@@ -72,6 +67,23 @@ export default function QuestionAnsweringApp() {
           <Text>{answer}</Text>
         </Box>
       )}
+
+      <style jsx>{`
+        .animated-text {
+          font-size: 36px;
+          font-family: Arial, sans-serif;
+          animation: fade 3s infinite;
+        }
+
+        @keyframes fade {
+          0%, 100% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+        }
+      `}</style>
     </VStack>
   );
 }
