@@ -6,46 +6,44 @@ export default function QuestionAnsweringApp() {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
 
-  // Function to fetch the answer
-  const fetchAnswer = () => {
-    const questionsAndAnswers = {
-      'What is the capital of France?': 'Paris',
-      'Who wrote "Romeo and Juliet"?': 'William Shakespeare',
-      'What is the largest planet in our solar system?': 'Jupiter',
-      'What is the boiling point of water in Celsius?': '100°C',
-      'How many continents are there on Earth?': '7',
-    };
-
-    const foundAnswer = questionsAndAnswers[question];
-
-    if (foundAnswer) {
-      setAnswer(foundAnswer);
-    } else {
-      setAnswer('Answer not found for this question');
+  // Simple question-answering function (replace with your logic)
+  const getAnswer = (questionText) => {
+    // Basic question-answering logic here (e.g., hardcoded answers)
+    switch (questionText.toLowerCase()) {
+      case 'what is your name?':
+        return "My name is Assistant.";
+      case 'how does photosynthesis work?':
+        return "Photosynthesis is the process by which plants convert sunlight into energy.";
+      default:
+        return "I'm sorry, I don't know the answer to that question.";
     }
   };
 
+  const handleQuestionSubmit = () => {
+    const answerText = getAnswer(question);
+    setAnswer(answerText);
+  };
+
   return (
-    <VStack spacing={4} align="center">
-      <Box>
-        <Text fontSize="xl">Question Answering Demo</Text>
-      </Box>
-      <Box>
-        <Input
-          placeholder="Ask a question..."
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-        />
-      </Box>
-      <Box>
-        <Button colorScheme="blue" onClick={fetchAnswer}>
-          Get Answer
-        </Button>
-      </Box>
-      <Box>
-        <Text fontSize="lg">Answer:</Text>
-        <Text>{answer}</Text>
-      </Box>
+    <VStack spacing="4" align="center">
+      {/* Text Input */}
+      <Input
+        type="text"
+        placeholder="Enter your question"
+        value={question}
+        onChange={(e) => setQuestion(e.target.value)}
+      />
+
+      {/* Button to submit the question */}
+      <Button onClick={handleQuestionSubmit}>Ask</Button>
+
+      {/* Display the answer */}
+      {answer && (
+        <Box>
+          <Text fontWeight="bold">Answer:</Text>
+          <Text>{answer}</Text>
+        </Box>
+      )}
     </VStack>
   );
 }
