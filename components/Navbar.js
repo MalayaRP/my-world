@@ -282,5 +282,22 @@ import {
       {
       label: 'My Designs',
       href: '/my-designs',
-      }
+      },
+     {
+      label: 'My Designs',
+      children: [
+        {
+          label: 'Q&A',
+          href: '/my-designs',
+        },
+        {
+          label: 'Notes',
+          href: '/compchem',
+        },
+        {
+          label: 'Play with Text',
+          href: '/web',
+        }
+      ],
+    },
   ];
