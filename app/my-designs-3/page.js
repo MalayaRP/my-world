@@ -7,6 +7,7 @@ function App() {
   const [sequence, setSequence] = useState('');
   const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [lastClickCorrect, setLastClickCorrect] = useState(true);
 
   // Generate a random sequence of letters
   useEffect(() => {
@@ -18,9 +19,13 @@ function App() {
     (letter) => {
       if (letter === sequence[currentLetterIndex]) {
         setCurrentLetterIndex(currentLetterIndex + 1);
+        setLastClickCorrect(true);
+
         if (currentLetterIndex === sequence.length - 1) {
           setIsGameOver(true);
         }
+      } else {
+        setLastClickCorrect(false);
       }
     },
     [sequence, currentLetterIndex]
@@ -31,6 +36,7 @@ function App() {
     setIsGameOver(false);
     const randomIndex = Math.floor(Math.random() * alphabet.length);
     setSequence(alphabet.charAt(randomIndex));
+    setLastClickCorrect(true);
   };
 
   return (
@@ -40,7 +46,9 @@ function App() {
           <Text fontSize="xl">
             {isGameOver ? 'Congratulations! You Win!' : 'Guess the Special Letter:'}
           </Text>
-          <Text fontSize="2xl">{isGameOver ? sequence : sequence.substr(0, currentLetterIndex)}</Text>
+          <Text fontSize="2xl">
+            {isGameOver ? sequence : sequence.substr(0, currentLetterIndex)}
+          </Text>
         </Box>
         <Box>
           {alphabet.split('').map((letter) => (
@@ -48,8 +56,10 @@ function App() {
               key={letter}
               onClick={() => handleButtonClick(letter)}
               isDisabled={isGameOver}
+              colorScheme={lastClickCorrect ? 'teal' : 'red'} // Change button color based on correctness
             >
               {letter}
+              {lastClickCorrect ? ' 😊' : ' 😢'} {/* Display happy or sad emoji */}
             </Button>
           ))}
         </Box>
