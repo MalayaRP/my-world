@@ -278,5 +278,9 @@ import {
     {
       label: 'Resume',
       href: 'https://www.dropbox.com/s/95ko7pfdv3sgvc5/Resume-Recent.pdf?dl=0',
-    }
+    },
+      {
+      label: 'My Designs',
+      href: '/designs',
+      }
   ];
