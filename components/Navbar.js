@@ -281,6 +281,6 @@ import {
     },
       {
       label: 'My Designs',
-      href: '/designs',
+      href: '/my-designs',
       }
   ];
