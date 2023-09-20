@@ -288,11 +288,11 @@ import {
         },
         {
           label: 'Notes',
-          href: '/compchem',
+          href: '/my-designs-2',
         },
         {
           label: 'Play with Text',
-          href: '/web',
+          href: '/my-designs-3',
         }
       ],
     },
