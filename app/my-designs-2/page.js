@@ -1,3 +1,4 @@
+
 'use client'
 import React, { useState, useEffect } from 'react';
 import {
@@ -19,12 +20,13 @@ import {
 import { FaTrash, FaCheck } from 'react-icons/fa';
 
 function App() {
-  const { colorMode } = useColorMode();
+  const { colorMode } = useColorMode(); // Get the current color mode (light/dark)
   const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
   const [priority, setPriority] = useState(1);
 
   useEffect(() => {
+    // Load saved notes from localStorage on component mount
     const savedNotes = JSON.parse(localStorage.getItem('notes'));
     if (savedNotes) {
       setNotes(savedNotes);
@@ -32,6 +34,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // Save notes to localStorage whenever the notes state changes
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
@@ -63,6 +66,7 @@ function App() {
     setNotes(updatedNotes);
   };
 
+  // Sort notes by priority (high to low) and completed status (incomplete to complete)
   const sortedNotes = [...notes].sort((a, b) => {
     if (a.completed === b.completed) {
       return b.priority - a.priority;
@@ -142,14 +146,14 @@ function App() {
                     onClick={() => handleCompleteNote(index)}
                   />
                 ) : (
-                  <IconButton
-                    icon={<FaCheck />}
-                    aria-label="Mark as Completed"
+                  <Button
                     colorScheme="teal"
                     size="sm"
                     mr={2}
                     onClick={() => handleCompleteNote(index)}
-                  />
+                  >
+                    Mark as Completed
+                  </Button>
                 )}
                 <Box flex="1" ml={2}>
                   <Text fontSize="lg" fontWeight="bold">
