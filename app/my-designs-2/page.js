@@ -16,7 +16,7 @@ import {
   IconButton,
   useColorMode,
 } from '@chakra-ui/react';
-import { FaTrash, FaCheck } from 'react-icons/fa';
+import { FaTrash, FaCheck, FaCircle, FaCheckCircle } from 'react-icons/fa';
 
 function App() {
   const { colorMode } = useColorMode(); // Get the current color mode (light/dark)
@@ -134,26 +134,15 @@ function App() {
                 display="flex"
                 alignItems="center"
               >
-                {savedNote.completed ? (
-                  <IconButton
-                    icon={<FaCheck />}
-                    aria-label="Completed"
-                    variant="outline"
-                    colorScheme="teal"
-                    size="sm"
-                    mr={2}
-                    onClick={() => handleCompleteNote(index)}
-                  />
-                ) : (
-                  <Button
-                    colorScheme="teal"
-                    size="sm"
-                    mr={2}
-                    onClick={() => handleCompleteNote(index)}
-                  >
-                    Mark as Completed
-                  </Button>
-                )}
+                <IconButton
+                  icon={savedNote.completed ? <FaCheckCircle /> : <FaCircle />}
+                  aria-label="Completed"
+                  variant="outline"
+                  colorScheme="teal"
+                  size="sm"
+                  mr={2}
+                  onClick={() => handleCompleteNote(index)}
+                />
                 <Box flex="1" ml={2}>
                   <Text fontSize="lg" fontWeight="bold">
                     Priority: {savedNote.priority}
