@@ -13,12 +13,17 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
+  Checkbox,
+  IconButton,
+  useColorMode,
 } from '@chakra-ui/react';
+import { FaTrash } from 'react-icons/fa';
 
 function App() {
+  const { colorMode } = useColorMode(); // Get the current color mode (light/dark)
   const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
-  const [priority, setPriority] = useState(1); // Initialize priority with a default value
+  const [priority, setPriority] = useState(1);
 
   useEffect(() => {
     // Load saved notes from localStorage on component mount
@@ -43,11 +48,35 @@ function App() {
 
   const handleSaveNote = () => {
     if (note.trim() !== '') {
-      setNotes([...notes, { text: note, priority }]);
+      setNotes([...notes, { text: note, priority, completed: false }]);
       setNote('');
-      setPriority(1); // Reset priority to default value after saving
+      setPriority(1);
     }
   };
+
+  const handleDeleteNote = (index) => {
+    const updatedNotes = [...notes];
+    updatedNotes.splice(index, 1);
+    setNotes(updatedNotes);
+  };
+
+  const handleCompleteNote = (index) => {
+    const updatedNotes = [...notes];
+    updatedNotes[index].completed = !updatedNotes[index].completed;
+    setNotes(updatedNotes);
+  };
+
+  const handleClearAll = () => {
+    setNotes([]);
+  };
+
+  // Sort notes by priority (high to low) and completed status (incomplete to complete)
+  const sortedNotes = [...notes].sort((a, b) => {
+    if (a.completed === b.completed) {
+      return b.priority - a.priority;
+    }
+    return a.completed ? 1 : -1;
+  });
 
   return (
     <ChakraProvider>
@@ -56,6 +85,8 @@ function App() {
           My Todo App
         </Text>
         <Box
+          bg={colorMode === 'dark' ? 'gray.700' : 'white'}
+          color={colorMode === 'dark' ? 'white' : 'black'}
           boxShadow="lg"
           p={4}
           borderRadius="md"
@@ -72,13 +103,15 @@ function App() {
           <Slider
             value={priority}
             onChange={handlePriorityChange}
-            max={5} // Set the maximum priority value as needed
+            max={5}
             step={1}
             size="lg"
             mt={2}
           >
-            <SliderTrack bg="gray.100">
-              <SliderFilledTrack bg="teal" />
+            <SliderTrack bg={colorMode === 'dark' ? 'gray.500' : 'gray.100'}>
+              <SliderFilledTrack
+                bg={colorMode === 'dark' ? 'teal.400' : 'teal.600'}
+              />
             </SliderTrack>
             <SliderThumb boxSize={6} />
           </Slider>
@@ -92,27 +125,50 @@ function App() {
             Save Todo
           </Button>
         </Box>
-        {notes.length > 0 && (
+        {sortedNotes.length > 0 && (
           <UnorderedList width="80%" spacing={2} mt={4}>
-            {notes.map((savedNote, index) => (
+            {sortedNotes.map((savedNote, index) => (
               <ListItem
                 key={index}
                 borderBottom="1px solid #ccc"
                 padding="4px"
                 borderRadius="md"
-                bg="white"
-                _hover={{ bg: 'gray.100' }}
+                bg={colorMode === 'dark' ? 'gray.700' : 'white'}
+                color={colorMode === 'dark' ? 'white' : 'black'}
+                _hover={{ bg: colorMode === 'dark' ? 'gray.600' : 'gray.100' }}
+                display="flex"
+                alignItems="center"
               >
-                <Box>
+                <Checkbox
+                  isChecked={savedNote.completed}
+                  onChange={() => handleCompleteNote(index)}
+                />
+                <Box flex="1" ml={2}>
                   <Text fontSize="lg" fontWeight="bold">
                     Priority: {savedNote.priority}
                   </Text>
                   {savedNote.text}
                 </Box>
+                <IconButton
+                  icon={<FaTrash />}
+                  aria-label="Delete"
+                  onClick={() => handleDeleteNote(index)}
+                  variant="ghost"
+                  colorScheme="red"
+                />
               </ListItem>
             ))}
           </UnorderedList>
         )}
+        <Button
+          onClick={handleClearAll}
+          colorScheme="red"
+          size="lg"
+          mt={4}
+          width="80%"
+        >
+          Clear All
+        </Button>
       </VStack>
     </ChakraProvider>
   );
