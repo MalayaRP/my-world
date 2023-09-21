@@ -10,13 +10,14 @@ import {
   CSSReset,
   Icon,
   Input,
+  useColorMode,
 } from '@chakra-ui/react';
 import {
   MdContentCopy,
   MdSave,
   MdEdit,
   MdDelete,
-  MdDeleteSweep, // Added delete all icon
+  MdDeleteSweep,
 } from 'react-icons/md';
 
 const theme = extendTheme({
@@ -28,12 +29,19 @@ const theme = extendTheme({
     primary: {
       500: '#FF5733', // Change to your preferred primary color
     },
-    background: '#F2F2F2', // Change to your preferred background color
-    text: '#333', // Change to your preferred text color
+    background: {
+      light: '#F2F2F2',
+      dark: '#1A202C', // Dark mode background color
+    },
+    text: {
+      light: '#333',
+      dark: 'white', // Dark mode text color
+    },
   },
 });
 
 const AudioToTextConverter = () => {
+  const { colorMode } = useColorMode(); // Get the current color mode (light/dark)
   const [transcribedText, setTranscribedText] = useState('');
   const [transcriptionHistory, setTranscriptionHistory] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
@@ -150,8 +158,8 @@ const AudioToTextConverter = () => {
   return (
     <VStack spacing={4} align="center">
       <Box
-        bg="primary.500"
-        color="white"
+        bg={colorMode === 'dark' ? 'background.dark' : 'primary.500'}
+        color={colorMode === 'dark' ? 'text.dark' : 'white'}
         p={4}
         borderRadius="md"
         boxShadow="md"
@@ -181,7 +189,8 @@ const AudioToTextConverter = () => {
       )}
       {transcribedText && (
         <Box
-          bg="white"
+          bg={colorMode === 'dark' ? 'background.dark' : 'white'}
+          color={colorMode === 'dark' ? 'text.dark' : 'primary.500'}
           p={4}
           borderRadius="md"
           boxShadow="md"
@@ -193,6 +202,7 @@ const AudioToTextConverter = () => {
           <Input
             value={transcribedText}
             onChange={e => setTranscribedText(e.target.value)}
+            color={colorMode === 'dark' ? 'text.dark' : 'primary.500'}
           />
           {editingIndex === -1 ? (
             <>
@@ -245,15 +255,16 @@ const AudioToTextConverter = () => {
         </Box>
       )}
       <Box
-        bg="white"
+        bg={colorMode === 'dark' ? 'background.dark' : 'white'}
+        color={colorMode === 'dark' ? 'text.dark' : 'primary.500'}
         p={4}
         borderRadius="md"
         boxShadow="md"
         w="100%"
-        maxH="300px" // Set the desired max height for the history box
+        maxH="300px"
         overflowY="auto"
         position="sticky"
-        top="150px" // Set the top position to your preferred value
+        top="150px"
       >
         <Text fontWeight="bold" color="primary.500">
           Transcription History:
@@ -264,6 +275,7 @@ const AudioToTextConverter = () => {
               <Input
                 value={transcribedText}
                 onChange={e => setTranscribedText(e.target.value)}
+                color={colorMode === 'dark' ? 'text.dark' : 'primary.500'}
               />
             ) : (
               item
