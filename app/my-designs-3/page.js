@@ -84,7 +84,7 @@ const AudioToTextConverter = () => {
     }
   };
 
-  const copyToClipboard = (text) => {
+  const copyToClipboard = text => {
     const textArea = document.createElement('textarea');
     textArea.value = text;
     document.body.appendChild(textArea);
@@ -93,12 +93,9 @@ const AudioToTextConverter = () => {
     document.body.removeChild(textArea);
   };
 
-  const saveTranscription = (text) => {
+  const saveTranscription = text => {
     if (text) {
-      setTranscriptionHistory(prevHistory => [
-        text,
-        ...prevHistory,
-      ]);
+      setTranscriptionHistory(prevHistory => [text, ...prevHistory]);
     }
   };
 
@@ -236,7 +233,7 @@ const AudioToTextConverter = () => {
         borderRadius="md"
         boxShadow="md"
         w="100%"
-        maxH="200px"
+        h="300px" // Set the desired height for the history box
         overflowY="auto"
       >
         <Text fontWeight="bold" color="primary.500">
