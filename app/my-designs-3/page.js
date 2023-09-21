@@ -1,4 +1,7 @@
 'use client'
+To add copy to clipboard and edit options to each block of history, you can make the following modifications to the code:
+
+```jsx
 import React, { useState, useEffect } from 'react';
 import {
   VStack,
@@ -11,7 +14,7 @@ import {
   Icon,
   Input,
 } from '@chakra-ui/react';
-import { MdContentCopy, MdSave } from 'react-icons/md';
+import { MdContentCopy, MdSave, MdEdit } from 'react-icons/md';
 
 const theme = extendTheme({
   fonts: {
@@ -31,6 +34,7 @@ const AudioToTextConverter = () => {
   const [transcribedText, setTranscribedText] = useState('');
   const [transcriptionHistory, setTranscriptionHistory] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
+  const [editingIndex, setEditingIndex] = useState(-1);
 
   useEffect(() => {
     // Load transcription history from local storage on app start
@@ -50,6 +54,16 @@ const AudioToTextConverter = () => {
 
   let recognition = null;
 
+  useEffect(() => {
+    // Automatically start listening for speech input when the component mounts
+    startRecording();
+
+    // Stop listening when the component unmounts
+    return () => {
+      stopRecording();
+    };
+  }, []);
+
   const startRecording = () => {
     recognition = new window.webkitSpeechRecognition();
     recognition.onstart = () => {
@@ -58,10 +72,10 @@ const AudioToTextConverter = () => {
     recognition.onresult = event => {
       const result = event.results[0][0].transcript;
       setTranscribedText(result);
+      saveTranscription(result);
     };
     recognition.onend = () => {
       setIsRecording(false);
-      saveTranscription();
     };
     recognition.start();
   };
@@ -70,27 +84,45 @@ const AudioToTextConverter = () => {
     if (recognition) {
       recognition.stop();
       setIsRecording(false);
-      saveTranscription();
     }
   };
 
-  const copyToClipboard = () => {
+  const copyToClipboard = (text) => {
     const textArea = document.createElement('textarea');
-    textArea.value = transcribedText;
+    textArea.value = text;
     document.body.appendChild(textArea);
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
   };
 
-  const saveTranscription = () => {
-    if (transcribedText) {
+  const saveTranscription = (text) => {
+    if (text) {
       setTranscriptionHistory(prevHistory => [
-        transcribedText,
+        text,
         ...prevHistory,
       ]);
+    }
+  };
+
+  const editTranscription = (index, text) => {
+    setEditingIndex(index);
+    setTranscribedText(text);
+  };
+
+  const saveEditedTranscription = () => {
+    if (editingIndex !== -1) {
+      const updatedHistory = [...transcriptionHistory];
+      updatedHistory[editingIndex] = transcribedText;
+      setTranscriptionHistory(updatedHistory);
+      setEditingIndex(-1);
       setTranscribedText('');
     }
+  };
+
+  const cancelEdit = () => {
+    setEditingIndex(-1);
+    setTranscribedText('');
   };
 
   const saveToFile = () => {
@@ -120,13 +152,23 @@ const AudioToTextConverter = () => {
           Voice to Text App
         </Text>
       </Box>
-      <Button
-        colorScheme="primary"
-        onClick={isRecording ? stopRecording : startRecording}
-        size="lg"
-      >
-        {isRecording ? 'Stop Recording' : 'Start Recording'}
-      </Button>
+      {isRecording ? (
+        <Button
+          colorScheme="primary"
+          onClick={stopRecording}
+          size="lg"
+        >
+          Stop Recording
+        </Button>
+      ) : (
+        <Button
+          colorScheme="primary"
+          onClick={startRecording}
+          size="lg"
+        >
+          Start Recording
+        </Button>
+      )}
       {transcribedText && (
         <Box
           bg="white"
@@ -139,29 +181,56 @@ const AudioToTextConverter = () => {
             Transcribed Text:
           </Text>
           <Input
-            defaultValue={transcribedText}
+            value={transcribedText}
             onChange={e => setTranscribedText(e.target.value)}
           />
-          <Button
-            onClick={copyToClipboard}
-            position="absolute"
-            top="0"
-            right="35px"
-            size="sm"
-            variant="ghost"
-          >
-            <Icon as={MdContentCopy} color="primary.500" />
-          </Button>
-          <Button
-            onClick={saveTranscription}
-            position="absolute"
-            top="0"
-            right="0"
-            size="sm"
-            variant="ghost"
-          >
-            <Icon as={MdSave} color="primary.500" />
-          </Button>
+          {editingIndex === -1 ? (
+            <>
+              <Button
+                onClick={() => copyToClipboard(transcribedText)}
+                position="absolute"
+                top="0"
+                right="35px"
+                size="sm"
+                variant="ghost"
+              >
+                <Icon as={MdContentCopy} color="primary.500" />
+              </Button>
+              <Button
+                onClick={() => editTranscription(0, transcribedText)}
+                position="absolute"
+                top="0"
+                right="0"
+                size="sm"
+                variant="ghost"
+              >
+                <Icon as={MdEdit} color="primary.500" />
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={saveEditedTranscription}
+                position="absolute"
+                top="0"
+                right="35px"
+                size="sm"
+                variant="ghost"
+              >
+                Save
+              </Button>
+              <Button
+                onClick={cancelEdit}
+                position="absolute"
+                top="0"
+                right="0"
+                size="sm"
+                variant="ghost"
+              >
+                Cancel
+              </Button>
+            </>
+          )}
         </Box>
       )}
       <Box
@@ -178,7 +247,57 @@ const AudioToTextConverter = () => {
         </Text>
         {transcriptionHistory.map((item, index) => (
           <Box key={index} borderWidth="1px" p={2} mt={2} borderRadius="md">
-            {item}
+            {editingIndex === index ? (
+              <Input
+                value={transcribedText}
+                onChange={e => setTranscribedText(e.target.value)}
+              />
+            ) : (
+              item
+            )}
+            {editingIndex === index ? (
+              <>
+                <Button
+                  onClick={() => saveEditedTranscription()}
+                  size="sm"
+                  variant="ghost"
+                  mt={2}
+                  colorScheme="primary"
+                >
+                  Save
+                </Button>
+                <Button
+                  onClick={() => cancelEdit()}
+                  size
+
+="sm"
+                  variant="ghost"
+                  mt={2}
+                  colorScheme="red"
+                >
+                  Cancel
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={() => copyToClipboard(item)}
+                  size="sm"
+                  variant="ghost"
+                  mt={2}
+                >
+                  <Icon as={MdContentCopy} color="primary.500" />
+                </Button>
+                <Button
+                  onClick={() => editTranscription(index, item)}
+                  size="sm"
+                  variant="ghost"
+                  mt={2}
+                >
+                  <Icon as={MdEdit} color="primary.500" />
+                </Button>
+              </>
+            )}
           </Box>
         ))}
         {transcriptionHistory.length > 0 && (
@@ -207,3 +326,14 @@ function App() {
 }
 
 export default App;
+```
+
+In this updated code:
+
+- The `editingIndex` state is introduced to keep track of which block of history is currently being edited. When you click the "Edit" button, it sets the `editingIndex` to the corresponding index.
+
+- The "Save" and "Cancel" buttons are displayed in each block of history when it is being edited, allowing you to save the changes or cancel the edit.
+
+- The "Edit" button is also added to each block of history, which allows you to enter edit mode for that specific block.
+
+With these modifications, you can copy, edit, and save individual blocks of history in the transcription history list.
