@@ -11,7 +11,13 @@ import {
   Icon,
   Input,
 } from '@chakra-ui/react';
-import { MdContentCopy, MdSave, MdEdit, MdDelete } from 'react-icons/md';
+import {
+  MdContentCopy,
+  MdSave,
+  MdEdit,
+  MdDelete,
+  MdDeleteSweep, // Added delete all icon
+} from 'react-icons/md';
 
 const theme = extendTheme({
   fonts: {
@@ -123,6 +129,10 @@ const AudioToTextConverter = () => {
     const updatedHistory = [...transcriptionHistory];
     updatedHistory.splice(index, 1);
     setTranscriptionHistory(updatedHistory);
+  };
+
+  const deleteAllHistory = () => {
+    setTranscriptionHistory([]);
   };
 
   const saveToFile = () => {
@@ -287,15 +297,26 @@ const AudioToTextConverter = () => {
         ))}
       </Box>
       {transcriptionHistory.length > 0 && (
-        <Button
-          onClick={saveToFile}
-          size="sm"
-          mt={2}
-          variant="outline"
-          colorScheme="primary"
-        >
-          Save Transcription History
-        </Button>
+        <VStack>
+          <Button
+            onClick={saveToFile}
+            size="sm"
+            mt={2}
+            variant="outline"
+            colorScheme="primary"
+          >
+            Save Transcription History
+          </Button>
+          <Button
+            onClick={deleteAllHistory}
+            size="sm"
+            mt={2}
+            variant="outline"
+            colorScheme="red"
+          >
+            Clear All History
+          </Button>
+        </VStack>
       )}
     </VStack>
   );
