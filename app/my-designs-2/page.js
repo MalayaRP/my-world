@@ -16,16 +16,15 @@ import {
   IconButton,
   useColorMode,
 } from '@chakra-ui/react';
-import { FaTrash, FaCheck, FaCircle, FaCheckCircle } from 'react-icons/fa';
+import { FaTrash, FaCheck } from 'react-icons/fa';
 
 function App() {
-  const { colorMode } = useColorMode(); // Get the current color mode (light/dark)
+  const { colorMode } = useColorMode();
   const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
   const [priority, setPriority] = useState(1);
 
   useEffect(() => {
-    // Load saved notes from localStorage on component mount
     const savedNotes = JSON.parse(localStorage.getItem('notes'));
     if (savedNotes) {
       setNotes(savedNotes);
@@ -33,7 +32,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Save notes to localStorage whenever the notes state changes
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
@@ -65,7 +63,6 @@ function App() {
     setNotes(updatedNotes);
   };
 
-  // Sort notes by priority (high to low) and completed status (incomplete to complete)
   const sortedNotes = [...notes].sort((a, b) => {
     if (a.completed === b.completed) {
       return b.priority - a.priority;
@@ -134,15 +131,26 @@ function App() {
                 display="flex"
                 alignItems="center"
               >
-                <IconButton
-                  icon={savedNote.completed ? <FaCheckCircle /> : <FaCircle />}
-                  aria-label="Completed"
-                  variant="outline"
-                  colorScheme="teal"
-                  size="sm"
-                  mr={2}
-                  onClick={() => handleCompleteNote(index)}
-                />
+                {savedNote.completed ? (
+                  <IconButton
+                    icon={<FaCheck />}
+                    aria-label="Completed"
+                    variant="outline"
+                    colorScheme="teal"
+                    size="sm"
+                    mr={2}
+                    onClick={() => handleCompleteNote(index)}
+                  />
+                ) : (
+                  <IconButton
+                    icon={<FaCheck />}
+                    aria-label="Mark as Completed"
+                    colorScheme="teal"
+                    size="sm"
+                    mr={2}
+                    onClick={() => handleCompleteNote(index)}
+                  />
+                )}
                 <Box flex="1" ml={2}>
                   <Text fontSize="lg" fontWeight="bold">
                     Priority: {savedNote.priority}
