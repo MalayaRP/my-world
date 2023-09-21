@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
-import { VStack, Box, Text, Button, ChakraProvider, extendTheme, CSSReset } from '@chakra-ui/react';
+import { VStack, Box, Text, Button, ChakraProvider, extendTheme, CSSReset, Icon, Input } from '@chakra-ui/react';
+import { MdContentCopy } from 'react-icons/md';
 
 const theme = extendTheme({
   fonts: {
@@ -9,7 +10,7 @@ const theme = extendTheme({
   },
   colors: {
     primary: {
-      500: '#007bff', // Change to your preferred primary color
+      500: '#007bff',
     },
   },
 });
@@ -42,6 +43,15 @@ const AudioToTextConverter = () => {
     }
   };
 
+  const copyToClipboard = () => {
+    const textArea = document.createElement('textarea');
+    textArea.value = transcribedText;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+  };
+
   return (
     <VStack spacing={4} align="center">
       <Box
@@ -65,9 +75,22 @@ const AudioToTextConverter = () => {
         {isRecording ? 'Stop Recording' : 'Start Recording'}
       </Button>
       {transcribedText && (
-        <Box borderWidth="1px" p={4} borderRadius="md">
+        <Box borderWidth="1px" p={4} borderRadius="md" position="relative">
           <Text fontWeight="bold">Transcribed Text:</Text>
-          <Text>{transcribedText}</Text>
+          <Input
+            defaultValue={transcribedText}
+            onChange={e => setTranscribedText(e.target.value)}
+          />
+          <Button
+            onClick={copyToClipboard}
+            position="absolute"
+            top="0"
+            right="0"
+            size="sm"
+            variant="ghost"
+          >
+            <Icon as={MdContentCopy} />
+          </Button>
         </Box>
       )}
     </VStack>
