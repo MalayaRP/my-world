@@ -9,11 +9,16 @@ import {
   ChakraProvider,
   UnorderedList,
   ListItem,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
 } from '@chakra-ui/react';
 
 function App() {
   const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
+  const [priority, setPriority] = useState(1); // Initialize priority with a default value
 
   useEffect(() => {
     // Load saved notes from localStorage on component mount
@@ -32,10 +37,15 @@ function App() {
     setNote(event.target.value);
   };
 
+  const handlePriorityChange = (value) => {
+    setPriority(value);
+  };
+
   const handleSaveNote = () => {
     if (note.trim() !== '') {
-      setNotes([...notes, note]);
+      setNotes([...notes, { text: note, priority }]);
       setNote('');
+      setPriority(1); // Reset priority to default value after saving
     }
   };
 
@@ -43,7 +53,7 @@ function App() {
     <ChakraProvider>
       <VStack spacing={4} align="center">
         <Text fontSize="2xl" fontWeight="bold">
-          My Note App
+          My Todo App
         </Text>
         <Box
           boxShadow="lg"
@@ -54,11 +64,24 @@ function App() {
           borderColor="gray.200"
         >
           <Input
-            placeholder="Take a note..."
+            placeholder="Add a todo..."
             value={note}
             onChange={handleNoteChange}
             size="lg"
           />
+          <Slider
+            value={priority}
+            onChange={handlePriorityChange}
+            max={5} // Set the maximum priority value as needed
+            step={1}
+            size="lg"
+            mt={2}
+          >
+            <SliderTrack bg="gray.100">
+              <SliderFilledTrack bg="teal" />
+            </SliderTrack>
+            <SliderThumb boxSize={6} />
+          </Slider>
           <Button
             onClick={handleSaveNote}
             colorScheme="teal"
@@ -66,7 +89,7 @@ function App() {
             mt={2}
             width="100%"
           >
-            Save Note
+            Save Todo
           </Button>
         </Box>
         {notes.length > 0 && (
@@ -80,7 +103,12 @@ function App() {
                 bg="white"
                 _hover={{ bg: 'gray.100' }}
               >
-                {savedNote}
+                <Box>
+                  <Text fontSize="lg" fontWeight="bold">
+                    Priority: {savedNote.priority}
+                  </Text>
+                  {savedNote.text}
+                </Box>
               </ListItem>
             ))}
           </UnorderedList>
