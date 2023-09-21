@@ -11,7 +11,7 @@ import {
   Icon,
   Input,
 } from '@chakra-ui/react';
-import { MdContentCopy, MdSave, MdEdit } from 'react-icons/md';
+import { MdContentCopy, MdSave, MdEdit, MdDelete } from 'react-icons/md';
 
 const theme = extendTheme({
   fonts: {
@@ -119,6 +119,12 @@ const AudioToTextConverter = () => {
     setTranscribedText('');
   };
 
+  const deleteTranscription = index => {
+    const updatedHistory = [...transcriptionHistory];
+    updatedHistory.splice(index, 1);
+    setTranscriptionHistory(updatedHistory);
+  };
+
   const saveToFile = () => {
     const textToSave = transcriptionHistory.join('\n');
     const blob = new Blob([textToSave], { type: 'text/plain' });
@@ -184,7 +190,7 @@ const AudioToTextConverter = () => {
                 onClick={() => copyToClipboard(transcribedText)}
                 position="absolute"
                 top="0"
-                right="35px"
+                right="50px"
                 size="sm"
                 variant="ghost"
               >
@@ -194,7 +200,7 @@ const AudioToTextConverter = () => {
                 onClick={() => editTranscription(0, transcribedText)}
                 position="absolute"
                 top="0"
-                right="0"
+                right="35px"
                 size="sm"
                 variant="ghost"
               >
@@ -207,7 +213,7 @@ const AudioToTextConverter = () => {
                 onClick={saveEditedTranscription}
                 position="absolute"
                 top="0"
-                right="35px"
+                right="50px"
                 size="sm"
                 variant="ghost"
               >
@@ -217,9 +223,10 @@ const AudioToTextConverter = () => {
                 onClick={cancelEdit}
                 position="absolute"
                 top="0"
-                right="0"
+                right="35px"
                 size="sm"
                 variant="ghost"
+                colorScheme="red"
               >
                 Cancel
               </Button>
@@ -251,47 +258,31 @@ const AudioToTextConverter = () => {
             ) : (
               item
             )}
-            {editingIndex === index ? (
-              <>
-                <Button
-                  onClick={() => saveEditedTranscription()}
-                  size="sm"
-                  variant="ghost"
-                  mt={2}
-                  colorScheme="primary"
-                >
-                  Save
-                </Button>
-                <Button
-                  onClick={() => cancelEdit()}
-                  size="sm"
-                  variant="ghost"
-                  mt={2}
-                  colorScheme="red"
-                >
-                  Cancel
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  onClick={() => copyToClipboard(item)}
-                  size="sm"
-                  variant="ghost"
-                  mt={2}
-                >
-                  <Icon as={MdContentCopy} color="primary.500" />
-                </Button>
-                <Button
-                  onClick={() => editTranscription(index, item)}
-                  size="sm"
-                  variant="ghost"
-                  mt={2}
-                >
-                  <Icon as={MdEdit} color="primary.500" />
-                </Button>
-              </>
-            )}
+            <Button
+              onClick={() => copyToClipboard(item)}
+              size="sm"
+              variant="ghost"
+              mt={2}
+            >
+              <Icon as={MdContentCopy} color="primary.500" />
+            </Button>
+            <Button
+              onClick={() => editTranscription(index, item)}
+              size="sm"
+              variant="ghost"
+              mt={2}
+            >
+              <Icon as={MdEdit} color="primary.500" />
+            </Button>
+            <Button
+              onClick={() => deleteTranscription(index)}
+              size="sm"
+              variant="ghost"
+              mt={2}
+              colorScheme="red"
+            >
+              <Icon as={MdDelete} color="red" />
+            </Button>
           </Box>
         ))}
       </Box>
