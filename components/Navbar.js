@@ -283,7 +283,7 @@ import {
       label: 'My Designs',
       children: [
         {
-          label: 'Q&A',
+          label: 'Plots',
           href: '/my-designs',
         },
         {
