@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   VStack,
   Box,
@@ -31,6 +31,22 @@ const AudioToTextConverter = () => {
   const [transcribedText, setTranscribedText] = useState('');
   const [transcriptionHistory, setTranscriptionHistory] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
+
+  useEffect(() => {
+    // Load transcription history from local storage on app start
+    const savedTranscriptions = localStorage.getItem('transcriptionHistory');
+    if (savedTranscriptions) {
+      setTranscriptionHistory(JSON.parse(savedTranscriptions));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save transcription history to local storage whenever it changes
+    localStorage.setItem(
+      'transcriptionHistory',
+      JSON.stringify(transcriptionHistory)
+    );
+  }, [transcriptionHistory]);
 
   let recognition = null;
 
@@ -160,7 +176,11 @@ const AudioToTextConverter = () => {
         <Text fontWeight="bold" color="primary.500">
           Transcription History:
         </Text>
-        <Text>{transcriptionHistory.join('\n')}</Text>
+        {transcriptionHistory.map((item, index) => (
+          <Box key={index} borderWidth="1px" p={2} mt={2} borderRadius="md">
+            {item}
+          </Box>
+        ))}
         {transcriptionHistory.length > 0 && (
           <Button
             onClick={saveToFile}
