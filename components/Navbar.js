@@ -291,7 +291,7 @@ import {
           href: '/my-designs-2',
         },
         {
-          label: 'Play with Text',
+          label: 'Voice to Text',
           href: '/my-designs-3',
         }
       ],
