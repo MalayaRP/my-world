@@ -13,11 +13,10 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  Checkbox,
   IconButton,
   useColorMode,
 } from '@chakra-ui/react';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaCheck } from 'react-icons/fa';
 
 function App() {
   const { colorMode } = useColorMode(); // Get the current color mode (light/dark)
@@ -64,10 +63,6 @@ function App() {
     const updatedNotes = [...notes];
     updatedNotes[index].completed = !updatedNotes[index].completed;
     setNotes(updatedNotes);
-  };
-
-  const handleClearAll = () => {
-    setNotes([]);
   };
 
   // Sort notes by priority (high to low) and completed status (incomplete to complete)
@@ -139,10 +134,26 @@ function App() {
                 display="flex"
                 alignItems="center"
               >
-                <Checkbox
-                  isChecked={savedNote.completed}
-                  onChange={() => handleCompleteNote(index)}
-                />
+                {savedNote.completed ? (
+                  <IconButton
+                    icon={<FaCheck />}
+                    aria-label="Completed"
+                    variant="outline"
+                    colorScheme="teal"
+                    size="sm"
+                    mr={2}
+                    onClick={() => handleCompleteNote(index)}
+                  />
+                ) : (
+                  <Button
+                    colorScheme="teal"
+                    size="sm"
+                    mr={2}
+                    onClick={() => handleCompleteNote(index)}
+                  >
+                    Mark as Completed
+                  </Button>
+                )}
                 <Box flex="1" ml={2}>
                   <Text fontSize="lg" fontWeight="bold">
                     Priority: {savedNote.priority}
@@ -161,7 +172,7 @@ function App() {
           </UnorderedList>
         )}
         <Button
-          onClick={handleClearAll}
+          onClick={() => setNotes([])}
           colorScheme="red"
           size="lg"
           mt={4}
