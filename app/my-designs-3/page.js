@@ -38,7 +38,7 @@ const AudioToTextConverter = () => {
         {isRecording ? (
           <Text>Recording...</Text>
         ) : (
-          <Text>Click the button to start recording</Text>
+          <Text>Voice to Text App </Text>
         )}
       </Box>
       <Button onClick={isRecording ? stopRecording : startRecording}>
