@@ -1,7 +1,4 @@
 'use client'
-To add copy to clipboard and edit options to each block of history, you can make the following modifications to the code:
-
-```jsx
 import React, { useState, useEffect } from 'react';
 import {
   VStack,
@@ -268,9 +265,7 @@ const AudioToTextConverter = () => {
                 </Button>
                 <Button
                   onClick={() => cancelEdit()}
-                  size
-
-="sm"
+                  size="sm"
                   variant="ghost"
                   mt={2}
                   colorScheme="red"
@@ -326,14 +321,3 @@ function App() {
 }
 
 export default App;
-```
-
-In this updated code:
-
-- The `editingIndex` state is introduced to keep track of which block of history is currently being edited. When you click the "Edit" button, it sets the `editingIndex` to the corresponding index.
-
-- The "Save" and "Cancel" buttons are displayed in each block of history when it is being edited, allowing you to save the changes or cancel the edit.
-
-- The "Edit" button is also added to each block of history, which allows you to enter edit mode for that specific block.
-
-With these modifications, you can copy, edit, and save individual blocks of history in the transcription history list.
