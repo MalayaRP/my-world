@@ -233,8 +233,10 @@ const AudioToTextConverter = () => {
         borderRadius="md"
         boxShadow="md"
         w="100%"
-        h="300px" // Set the desired height for the history box
+        maxH="300px" // Set the desired max height for the history box
         overflowY="auto"
+        position="sticky"
+        top="150px" // Set the top position to your preferred value
       >
         <Text fontWeight="bold" color="primary.500">
           Transcription History:
@@ -292,18 +294,18 @@ const AudioToTextConverter = () => {
             )}
           </Box>
         ))}
-        {transcriptionHistory.length > 0 && (
-          <Button
-            onClick={saveToFile}
-            size="sm"
-            mt={2}
-            variant="outline"
-            colorScheme="primary"
-          >
-            Save Transcription History
-          </Button>
-        )}
       </Box>
+      {transcriptionHistory.length > 0 && (
+        <Button
+          onClick={saveToFile}
+          size="sm"
+          mt={2}
+          variant="outline"
+          colorScheme="primary"
+        >
+          Save Transcription History
+        </Button>
+      )}
     </VStack>
   );
 };
