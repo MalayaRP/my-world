@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import { MdContentCopy, MdSave } from 'react-icons/md';
 
-// Customize your Chakra UI theme here
 const theme = extendTheme({
   fonts: {
     heading: 'Arial, sans-serif',
@@ -30,7 +29,7 @@ const theme = extendTheme({
 
 const AudioToTextConverter = () => {
   const [transcribedText, setTranscribedText] = useState('');
-  const [previousTranscribedText, setPreviousTranscribedText] = useState('');
+  const [transcriptionHistory, setTranscriptionHistory] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
 
   let recognition = null;
@@ -42,11 +41,11 @@ const AudioToTextConverter = () => {
     };
     recognition.onresult = event => {
       const result = event.results[0][0].transcript;
-      setPreviousTranscribedText(transcribedText);
       setTranscribedText(result);
     };
     recognition.onend = () => {
       setIsRecording(false);
+      saveTranscription();
     };
     recognition.start();
   };
@@ -55,6 +54,7 @@ const AudioToTextConverter = () => {
     if (recognition) {
       recognition.stop();
       setIsRecording(false);
+      saveTranscription();
     }
   };
 
@@ -67,8 +67,18 @@ const AudioToTextConverter = () => {
     document.body.removeChild(textArea);
   };
 
+  const saveTranscription = () => {
+    if (transcribedText) {
+      setTranscriptionHistory(prevHistory => [
+        transcribedText,
+        ...prevHistory,
+      ]);
+      setTranscribedText('');
+    }
+  };
+
   const saveToFile = () => {
-    const textToSave = transcribedText;
+    const textToSave = transcriptionHistory.join('\n');
     const blob = new Blob([textToSave], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -113,8 +123,8 @@ const AudioToTextConverter = () => {
             Transcribed Text:
           </Text>
           <Input
-            defaultValue={previousTranscribedText}
-            onChange={e => setPreviousTranscribedText(e.target.value)}
+            defaultValue={transcribedText}
+            onChange={e => setTranscribedText(e.target.value)}
           />
           <Button
             onClick={copyToClipboard}
@@ -127,7 +137,7 @@ const AudioToTextConverter = () => {
             <Icon as={MdContentCopy} color="primary.500" />
           </Button>
           <Button
-            onClick={saveToFile}
+            onClick={saveTranscription}
             position="absolute"
             top="0"
             right="0"
@@ -138,6 +148,31 @@ const AudioToTextConverter = () => {
           </Button>
         </Box>
       )}
+      <Box
+        bg="white"
+        p={4}
+        borderRadius="md"
+        boxShadow="md"
+        w="100%"
+        maxH="200px"
+        overflowY="auto"
+      >
+        <Text fontWeight="bold" color="primary.500">
+          Transcription History:
+        </Text>
+        <Text>{transcriptionHistory.join('\n')}</Text>
+        {transcriptionHistory.length > 0 && (
+          <Button
+            onClick={saveToFile}
+            size="sm"
+            mt={2}
+            variant="outline"
+            colorScheme="primary"
+          >
+            Save Transcription History
+          </Button>
+        )}
+      </Box>
     </VStack>
   );
 };
