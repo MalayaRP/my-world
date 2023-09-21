@@ -1,74 +1,64 @@
 'use client'
-import React, { useState, useEffect, useCallback } from 'react';
-import { VStack, Box, Text, Button, ChakraProvider } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { VStack, Box, Text, Button, ChakraProvider, extendTheme, CSSReset } from '@chakra-ui/react';
 
-function App() {
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const [sequence, setSequence] = useState('');
-  const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
-  const [isGameOver, setIsGameOver] = useState(false);
-  const [lastClickCorrect, setLastClickCorrect] = useState(true);
+const theme = extendTheme();
 
-  // Generate a random sequence of letters
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * alphabet.length);
-    setSequence(alphabet.charAt(randomIndex));
-  }, []);
+const AudioToTextConverter = () => {
+  const [transcribedText, setTranscribedText] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
 
-  const handleButtonClick = useCallback(
-    (letter) => {
-      if (letter === sequence[currentLetterIndex]) {
-        setCurrentLetterIndex(currentLetterIndex + 1);
-        setLastClickCorrect(true);
+  let recognition = null;
 
-        if (currentLetterIndex === sequence.length - 1) {
-          setIsGameOver(true);
-        }
-      } else {
-        setLastClickCorrect(false);
-      }
-    },
-    [sequence, currentLetterIndex]
-  );
+  const startRecording = () => {
+    recognition = new window.webkitSpeechRecognition();
+    recognition.onstart = () => {
+      setIsRecording(true);
+    };
+    recognition.onresult = event => {
+      const result = event.results[0][0].transcript;
+      setTranscribedText(result);
+    };
+    recognition.onend = () => {
+      setIsRecording(false);
+    };
+    recognition.start();
+  };
 
-  const restartGame = () => {
-    setCurrentLetterIndex(0);
-    setIsGameOver(false);
-    const randomIndex = Math.floor(Math.random() * alphabet.length);
-    setSequence(alphabet.charAt(randomIndex));
-    setLastClickCorrect(true);
+  const stopRecording = () => {
+    if (recognition) {
+      recognition.stop();
+      setIsRecording(false);
+    }
   };
 
   return (
-    <ChakraProvider>
-      <VStack spacing={4}>
-        <Box>
-          <Text fontSize="xl">
-            {isGameOver ? 'Congratulations! You Win!' : 'Guess the Special Letter:'}
-          </Text>
-          <Text fontSize="2xl">
-            {isGameOver ? sequence : sequence.substr(0, currentLetterIndex)}
-          </Text>
-        </Box>
-        <Box>
-          {alphabet.split('').map((letter) => (
-            <Button
-              key={letter}
-              onClick={() => handleButtonClick(letter)}
-              isDisabled={isGameOver}
-              colorScheme={lastClickCorrect ? 'teal' : 'red'} // Change button color based on correctness
-            >
-              {letter}
-              {lastClickCorrect ? ' 😊' : ' 😢'} {/* Display happy or sad emoji */}
-            </Button>
-          ))}
-        </Box>
-        {isGameOver && (
-          <Button colorScheme="teal" onClick={restartGame}>
-            Restart
-          </Button>
+    <VStack spacing={4}>
+      <Box>
+        {isRecording ? (
+          <Text>Recording...</Text>
+        ) : (
+          <Text>Click the button to start recording</Text>
         )}
-      </VStack>
+      </Box>
+      <Button onClick={isRecording ? stopRecording : startRecording}>
+        {isRecording ? 'Stop Recording' : 'Start Recording'}
+      </Button>
+      {transcribedText && (
+        <Box>
+          <Text fontWeight="bold">Transcribed Text:</Text>
+          <Text>{transcribedText}</Text>
+        </Box>
+      )}
+    </VStack>
+  );
+};
+
+function App() {
+  return (
+    <ChakraProvider theme={theme}>
+      <CSSReset />
+      <AudioToTextConverter />
     </ChakraProvider>
   );
 }
