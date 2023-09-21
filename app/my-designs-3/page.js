@@ -1,17 +1,30 @@
 'use client'
 import React, { useState } from 'react';
-import { VStack, Box, Text, Button, ChakraProvider, extendTheme, CSSReset, Icon, Input } from '@chakra-ui/react';
+import {
+  VStack,
+  Box,
+  Text,
+  Button,
+  ChakraProvider,
+  extendTheme,
+  CSSReset,
+  Icon,
+  Input,
+} from '@chakra-ui/react';
 import { MdContentCopy, MdSave } from 'react-icons/md';
 
+// Customize your Chakra UI theme here
 const theme = extendTheme({
   fonts: {
-    heading: 'Montserrat, sans-serif',
-    body: 'Roboto, sans-serif',
+    heading: 'Arial, sans-serif',
+    body: 'Arial, sans-serif',
   },
   colors: {
     primary: {
-      500: '#007bff',
+      500: '#FF5733', // Change to your preferred primary color
     },
+    background: '#F2F2F2', // Change to your preferred background color
+    text: '#333', // Change to your preferred text color
   },
 });
 
@@ -89,8 +102,16 @@ const AudioToTextConverter = () => {
         {isRecording ? 'Stop Recording' : 'Start Recording'}
       </Button>
       {transcribedText && (
-        <Box borderWidth="1px" p={4} borderRadius="md" position="relative">
-          <Text fontWeight="bold">Transcribed Text:</Text>
+        <Box
+          bg="white"
+          p={4}
+          borderRadius="md"
+          boxShadow="md"
+          position="relative"
+        >
+          <Text fontWeight="bold" color="primary.500">
+            Transcribed Text:
+          </Text>
           <Input
             defaultValue={previousTranscribedText}
             onChange={e => setPreviousTranscribedText(e.target.value)}
@@ -103,7 +124,7 @@ const AudioToTextConverter = () => {
             size="sm"
             variant="ghost"
           >
-            <Icon as={MdContentCopy} />
+            <Icon as={MdContentCopy} color="primary.500" />
           </Button>
           <Button
             onClick={saveToFile}
@@ -113,7 +134,7 @@ const AudioToTextConverter = () => {
             size="sm"
             variant="ghost"
           >
-            <Icon as={MdSave} />
+            <Icon as={MdSave} color="primary.500" />
           </Button>
         </Box>
       )}
