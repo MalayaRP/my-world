@@ -7,6 +7,11 @@ import {
   ChakraProvider,
   extendTheme,
   useColorMode,
+  Text,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
 } from '@chakra-ui/react';
 import Typewriter from 'typewriter-effect';
 
@@ -61,7 +66,6 @@ const questions = [
     options: ['Trust it', 'Be cautious'],
     correctAnswer: 'Be cautious',
   },
-  // Add your remaining questions here
 ];
 
 // Extend the Chakra UI theme to customize dark mode styles
@@ -101,7 +105,9 @@ function Story({ onGameStart }) {
 function Questions({ onAnswer, question, options }) {
   return (
     <div>
-      <h2 style={{ color: 'green' }}>{question}</h2>
+      <Text as="h2" color="green" fontWeight="bold">
+        {question}
+      </Text>
       {options.map((option, index) => (
         <Button
           key={index}
@@ -118,10 +124,25 @@ function Questions({ onAnswer, question, options }) {
   );
 }
 
+function ProgressSlider({ progress }) {
+  return (
+    <Box mt="4">
+      <Slider value={progress} max={questions.length - 1} min={0} step={1}>
+        <SliderTrack>
+          <SliderFilledTrack bg="teal" />
+        </SliderTrack>
+        <SliderThumb boxSize={6} bg="teal" />
+      </Slider>
+      <Text mt="2">Progress: {progress + 1} / {questions.length}</Text>
+    </Box>
+  );
+}
+
 function App() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+  const [progress, setProgress] = useState(0);
   const { colorMode } = useColorMode();
 
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -131,6 +152,7 @@ function App() {
     setQuestionIndex(0);
     setScore(0);
     setGameOver(false);
+    setProgress(0);
     playBackgroundMusic(); // Start playing background music when the game starts
   };
 
@@ -138,6 +160,7 @@ function App() {
     const currentQuestion = questions[questionIndex];
     if (selectedOption === currentQuestion.correctAnswer) {
       setScore(score + 1);
+      setProgress(progress + 1);
       playSuccessSound(); // Play success sound for correct answers
     } else {
       playFailureSound(); // Play failure sound for incorrect answers
@@ -154,6 +177,7 @@ function App() {
     setQuestionIndex(0);
     setScore(0);
     setGameOver(false);
+    setProgress(0);
     playBackgroundMusic(); // Start playing background music when the game restarts
   };
 
@@ -195,18 +219,25 @@ function App() {
           {isGameStarted ? (
             gameOver ? (
               <div>
-                <h2 style={{ color: 'red' }}>Game Over!</h2>
-                <p style={{ color: 'blue' }}>Your Score: {score} / {questions.length}</p>
+                <Text as="h2" color="red" fontWeight="bold">
+                  Game Over!
+                </Text>
+                <Text as="p" color="blue" fontWeight="bold">
+                  Your Score: {score} / {questions.length}
+                </Text>
                 <Button onClick={restartGame} colorScheme="teal">
                   Restart Game
                 </Button>
               </div>
             ) : (
-              <Questions
-                onAnswer={handleAnswer}
-                question={questions[questionIndex].question}
-                options={questions[questionIndex].options}
-              />
+              <div>
+                <Questions
+                  onAnswer={handleAnswer}
+                  question={questions[questionIndex].question}
+                  options={questions[questionIndex].options}
+                />
+                <ProgressSlider progress={progress} />
+              </div>
             )
           ) : (
             <Story onGameStart={handleGameStart} />
