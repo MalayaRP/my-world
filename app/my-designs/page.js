@@ -5,7 +5,8 @@ import {
   Box,
   Button,
   ChakraProvider,
-  Text,
+  extendTheme,
+  useColorMode,
 } from '@chakra-ui/react';
 import Typewriter from 'typewriter-effect';
 
@@ -60,65 +61,86 @@ const questions = [
     options: ['Trust it', 'Be cautious'],
     correctAnswer: 'Be cautious',
   },
-  {
-    question: 'You discover a hidden cave. Do you enter or walk away?',
-    options: ['Enter', 'Walk away'],
-    correctAnswer: 'Enter',
-  },
-  {
-    question: 'You find a magical potion. Do you drink it or leave it?',
-    options: ['Drink it', 'Leave it'],
-    correctAnswer: 'Drink it',
-  },
-  {
-    question: 'You meet a mysterious traveler. Do you chat with them or avoid them?',
-    options: ['Chat with them', 'Avoid them'],
-    correctAnswer: 'Chat with them',
-  },
-  {
-    question: 'You encounter a rickety bridge. Do you cross it or find another route?',
-    options: ['Cross it', 'Find another route'],
-    correctAnswer: 'Cross it',
-  },
+  // Add your remaining questions here
 ];
+
+// Extend the Chakra UI theme to customize dark mode styles
+const theme = extendTheme({
+  config: {
+    initialColorMode: 'light',
+  },
+  styles: {
+    global: (props) => ({
+      body: {
+        bg: props.colorMode === 'dark' ? 'gray.800' : 'white',
+        color: props.colorMode === 'dark' ? 'white' : 'black',
+      },
+    }),
+  },
+});
+
+function Story({ onGameStart }) {
+  return (
+    <div>
+      <Typewriter
+        options={{
+          strings: [
+            "Once upon a time, in a distant kingdom, a princess was captured by a fearsome dragon. You, the brave adventurer, have set out on a quest to rescue her. Your journey is filled with challenges and decisions. Make the right choices to save the princess!"
+          ],
+          autoStart: true,
+          loop: false,
+        }}
+      />
+      <Button onClick={onGameStart} colorScheme="teal" mt="4">
+        Start the Adventure
+      </Button>
+    </div>
+  );
+}
+
+function Questions({ onAnswer, question, options }) {
+  return (
+    <div>
+      <h2 style={{ color: 'green' }}>{question}</h2>
+      {options.map((option, index) => (
+        <Button
+          key={index}
+          onClick={() => onAnswer(option)}
+          colorScheme="purple"
+          size="lg"
+          padding="12px 24px"
+          mt="2"
+        >
+          {option}
+        </Button>
+      ))}
+    </div>
+  );
+}
 
 function App() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
+  const [gameOver, setGameOver] = useState(true);
+  const { colorMode } = useColorMode();
 
-  const [story, setStory] = useState(
-    "Once upon a time, in a distant kingdom, a princess was captured by a fearsome dragon. You, the brave adventurer, have set out on a quest to rescue her. Your journey is filled with challenges and decisions. Make the right choices to save the princess!"
-  );
+  const [isGameStarted, setIsGameStarted] = useState(false);
 
-  const successSoundUrl = 'https://cdn.pixabay.com/download/audio/2022/03/24/audio_866d42f469.mp3'; // Replace with your success sound URL
-  const failureSoundUrl = 'https://cdn.pixabay.com/download/audio/2022/03/24/audio_e6710b8e79.mp3'; // Replace with your failure sound URL
-
-  const playSuccessSound = () => {
-    const successSound = new Audio(successSoundUrl);
-    successSound.play();
-  };
-
-  const playFailureSound = () => {
-    const failureSound = new Audio(failureSoundUrl);
-    failureSound.play();
-  };
-
-  const playBackgroundMusic = () => {
-    const backgroundMusicUrl = 'https://cdn.pixabay.com/download/audio/2022/01/05/audio_51e67495bc.mp3'; // Replace with your music URL
-    const backgroundMusic = new Audio(backgroundMusicUrl);
-    backgroundMusic.loop = true;
-    backgroundMusic.play();
+  const handleGameStart = () => {
+    setIsGameStarted(true);
+    setQuestionIndex(0);
+    setScore(0);
+    setGameOver(false);
+    playBackgroundMusic(); // Start playing background music when the game starts
   };
 
   const handleAnswer = (selectedOption) => {
     const currentQuestion = questions[questionIndex];
     if (selectedOption === currentQuestion.correctAnswer) {
       setScore(score + 1);
-      playSuccessSound();
+      playSuccessSound(); // Play success sound for correct answers
     } else {
-      playFailureSound();
-      setGameOver(true);
+      playFailureSound(); // Play failure sound for incorrect answers
     }
 
     if (questionIndex === questions.length - 1) {
@@ -132,19 +154,27 @@ function App() {
     setQuestionIndex(0);
     setScore(0);
     setGameOver(false);
+    playBackgroundMusic(); // Start playing background music when the game restarts
   };
 
-  useEffect(() => {
-    playBackgroundMusic(); // Start playing background music when the component mounts
+  const playBackgroundMusic = () => {
+    const backgroundMusicUrl = 'https://cdn.pixabay.com/download/audio/2022/01/05/audio_51e67495bc.mp3'; // Replace with your music URL
+    const backgroundMusic = new Audio(backgroundMusicUrl);
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
+  };
 
-    return () => {
-      // Cleanup when the component unmounts
-      const backgroundMusicUrl = 'URL_TO_BACKGROUND_MUSIC.mp3'; // Replace with your music URL
-      const backgroundMusic = new Audio(backgroundMusicUrl);
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
-    };
-  }, []); // Empty dependency array to run this effect only once
+  const playSuccessSound = () => {
+    const successSoundUrl = 'https://cdn.pixabay.com/download/audio/2022/03/24/audio_866d42f469.mp3'; // Replace with your success sound URL
+    const successSound = new Audio(successSoundUrl);
+    successSound.play();
+  };
+
+  const playFailureSound = () => {
+    const failureSoundUrl = 'https://cdn.pixabay.com/download/audio/2022/03/24/audio_e6710b8e79.mp3'; // Replace with your failure sound URL
+    const failureSound = new Audio(failureSoundUrl);
+    failureSound.play();
+  };
 
   useEffect(() => {
     if (gameOver) {
@@ -154,40 +184,32 @@ function App() {
   }, [gameOver]);
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <VStack spacing={4} align="center">
-        <Box padding="20px" fontFamily="Arial, sans-serif" bgColor="#f0f0f0" borderRadius="10px">
-          {gameOver ? (
-            <div>
-              <h2 style={{ color: 'red' }}>Game Over!</h2>
-              <p style={{ color: 'blue' }}>Your Score: {score} / {questions.length}</p>
-              <Button onClick={restartGame} colorScheme="teal">
-                Restart Game
-              </Button>
-            </div>
-          ) : (
-            <div>
-              <Typewriter
-                options={{
-                  strings: [story],
-                  autoStart: true,
-                  loop: false,
-                }}
-              />
-              <h2 style={{ color: 'green' }}>Question {questionIndex + 1}</h2>
-              <p>{questions[questionIndex].question}</p>
-              {questions[questionIndex].options.map((option, index) => (
-                <Button
-                  key={index}
-                  onClick={() => handleAnswer(option)}
-                  colorScheme="purple"
-                  size="lg"
-                  padding="12px 24px"
-                >
-                  {option}
+        <Box
+          padding="20px"
+          fontFamily="Arial, sans-serif"
+          borderRadius="10px"
+          maxWidth="500px"
+        >
+          {isGameStarted ? (
+            gameOver ? (
+              <div>
+                <h2 style={{ color: 'red' }}>Game Over!</h2>
+                <p style={{ color: 'blue' }}>Your Score: {score} / {questions.length}</p>
+                <Button onClick={restartGame} colorScheme="teal">
+                  Restart Game
                 </Button>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <Questions
+                onAnswer={handleAnswer}
+                question={questions[questionIndex].question}
+                options={questions[questionIndex].options}
+              />
+            )
+          ) : (
+            <Story onGameStart={handleGameStart} />
           )}
         </Box>
       </VStack>
