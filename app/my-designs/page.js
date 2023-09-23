@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   ChakraProvider,
+  Text,
 } from '@chakra-ui/react';
 
 const questions = [
@@ -65,10 +66,36 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
+  const [story, setStory] = useState(
+    "Once upon a time, in a distant kingdom, a princess was captured by a fearsome dragon. You, the brave adventurer, have set out on a quest to rescue her. Your journey is filled with challenges and decisions. Make the right choices to save the princess!"
+  );
+
+  const backgroundMusicUrl = 'https://cdn.pixabay.com/download/audio/2022/01/05/audio_51e67495bc.mp3'; // Replace with your music URL
+
+  const playSuccessSound = () => {
+    const successSound = new Audio('/success.mp3');
+    successSound.play();
+  };
+
+  const playFailureSound = () => {
+    const failureSound = new Audio('/failure.mp3');
+    failureSound.play();
+  };
+
+  const playBackgroundMusic = () => {
+    const backgroundMusic = new Audio(backgroundMusicUrl);
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
+  };
+
   const handleAnswer = (selectedOption) => {
     const currentQuestion = questions[questionIndex];
     if (selectedOption === currentQuestion.correctAnswer) {
       setScore(score + 1);
+      playSuccessSound();
+    } else {
+      playFailureSound();
+      setGameOver(true);
     }
 
     if (questionIndex === questions.length - 1) {
@@ -83,6 +110,17 @@ function App() {
     setScore(0);
     setGameOver(false);
   };
+
+  useEffect(() => {
+    playBackgroundMusic(); // Start playing background music when the component mounts
+
+    return () => {
+      // Cleanup when the component unmounts
+      const backgroundMusic = new Audio(backgroundMusicUrl);
+      backgroundMusic.pause();
+      backgroundMusic.currentTime = 0;
+    };
+  }, []); // Empty dependency array to run this effect only once
 
   useEffect(() => {
     if (gameOver) {
@@ -102,6 +140,7 @@ function App() {
             </div>
           ) : (
             <div>
+              <Text fontSize="xl" mb={4}>{story}</Text>
               <h2>Question {questionIndex + 1}</h2>
               <p>{questions[questionIndex].question}</p>
               {questions[questionIndex].options.map((option, index) => (
