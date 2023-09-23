@@ -283,7 +283,7 @@ import {
       label: 'My Designs',
       children: [
         {
-          label: 'Plots',
+          label: 'Game',
           href: '/my-designs',
         },
         {
