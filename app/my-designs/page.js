@@ -7,6 +7,8 @@ import {
   ChakraProvider,
   Text,
 } from '@chakra-ui/react';
+import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import Typewriter from 'typewriter-effect';
 
 const questions = [
   {
@@ -70,19 +72,21 @@ function App() {
     "Once upon a time, in a distant kingdom, a princess was captured by a fearsome dragon. You, the brave adventurer, have set out on a quest to rescue her. Your journey is filled with challenges and decisions. Make the right choices to save the princess!"
   );
 
-  const backgroundMusicUrl = 'https://cdn.pixabay.com/download/audio/2022/01/05/audio_51e67495bc.mp3'; // Replace with your music URL
+  const successSoundUrl = 'https://cdn.pixabay.com/download/audio/2022/03/24/audio_866d42f469.mp3'; // Replace with your success sound URL
+  const failureSoundUrl = 'https://cdn.pixabay.com/download/audio/2022/03/24/audio_e6710b8e79.mp3'; // Replace with your failure sound URL
 
   const playSuccessSound = () => {
-    const successSound = new Audio('/success.mp3');
+    const successSound = new Audio(successSoundUrl);
     successSound.play();
   };
 
   const playFailureSound = () => {
-    const failureSound = new Audio('/failure.mp3');
+    const failureSound = new Audio(failureSoundUrl);
     failureSound.play();
   };
 
   const playBackgroundMusic = () => {
+    const backgroundMusicUrl = 'https://cdn.pixabay.com/download/audio/2022/01/05/audio_51e67495bc.mp3'; // Replace with your music URL
     const backgroundMusic = new Audio(backgroundMusicUrl);
     backgroundMusic.loop = true;
     backgroundMusic.play();
@@ -116,6 +120,7 @@ function App() {
 
     return () => {
       // Cleanup when the component unmounts
+      const backgroundMusicUrl = 'URL_TO_BACKGROUND_MUSIC.mp3'; // Replace with your music URL
       const backgroundMusic = new Audio(backgroundMusicUrl);
       backgroundMusic.pause();
       backgroundMusic.currentTime = 0;
@@ -125,6 +130,7 @@ function App() {
   useEffect(() => {
     if (gameOver) {
       // Game over logic (e.g., show a message or play a sound)
+      console.log('Game over!');
     }
   }, [gameOver]);
 
@@ -140,13 +146,21 @@ function App() {
             </div>
           ) : (
             <div>
-              <Text fontSize="xl" mb={4}>{story}</Text>
+              <Typewriter
+                options={{
+                  strings: [story],
+                  autoStart: true,
+                  loop: false,
+                }}
+              />
               <h2>Question {questionIndex + 1}</h2>
               <p>{questions[questionIndex].question}</p>
               {questions[questionIndex].options.map((option, index) => (
                 <Button
                   key={index}
                   onClick={() => handleAnswer(option)}
+                  leftIcon={<FaCheckCircle />} // Add icon for correct answer
+                  rightIcon={<FaTimesCircle />} // Add icon for incorrect answer
                 >
                   {option}
                 </Button>
