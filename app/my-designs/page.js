@@ -8,66 +8,74 @@ import {
   Text,
   ChakraProvider,
 } from '@chakra-ui/react';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from 'recharts';
 
 function App() {
-  const [data, setData] = useState([]);
-  const [xValue, setXValue] = useState('');
-  const [yValue, setYValue] = useState('');
+  const [points, setPoints] = useState([]);
+  const [connecting, setConnecting] = useState(false);
 
-  const handleAddData = () => {
-    if (xValue && yValue) {
-      setData([...data, { x: parseFloat(xValue), y: parseFloat(yValue) }]);
-      setXValue('');
-      setYValue('');
+  const handlePointClick = (e) => {
+    if (!connecting) {
+      setPoints([...points, { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY }]);
     }
   };
 
+  const handleConnect = () => {
+    if (points.length === 2) {
+      setConnecting(true);
+    }
+  };
+
+  const handleDrawLine = () => {
+    setConnecting(false);
+  };
+
+  return (
+    <VStack align="center" spacing={4}>
+      <Box
+        position="relative"
+        width="500px"
+        height="500px"
+        border="1px solid #000"
+        onClick={handlePointClick}
+      >
+        {points.map((point, index) => (
+          <Box
+            key={index}
+            position="absolute"
+            left={`${point.x}px`}
+            top={`${point.y}px`}
+            width="10px"
+            height="10px"
+            borderRadius="50%"
+            backgroundColor="#000"
+          ></Box>
+        ))}
+        {connecting && (
+          <svg>
+            <line
+              x1={points[0].x}
+              y1={points[0].y}
+              x2={points[1].x}
+              y2={points[1].y}
+              style={{ stroke: 'black', strokeWidth: 2 }}
+            />
+          </svg>
+        )}
+      </Box>
+      <Button onClick={handleConnect} disabled={points.length !== 2}>
+        Connect Points
+      </Button>
+      <Button onClick={handleDrawLine}>Draw Line</Button>
+    </VStack>
+  );
+}
+
+function Game() {
   return (
     <ChakraProvider>
-      <VStack spacing={4} alignItems="center" marginTop="20px">
-        <Text fontSize="xl">Plotting App</Text>
-        <Box>
-          <Input
-            type="number"
-            placeholder="Enter X value"
-            value={xValue}
-            onChange={(e) => setXValue(e.target.value)}
-          />
-          <Input
-            type="number"
-            placeholder="Enter Y value"
-            value={yValue}
-            onChange={(e) => setYValue(e.target.value)}
-          />
-          <Button colorScheme="teal" onClick={handleAddData}>
-            Add Data Point
-          </Button>
-        </Box>
-        <LineChart
-          width={600}
-          height={300}
-          data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="x" type="number" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="y" stroke="#8884d8" />
-        </LineChart>
-      </VStack>
+      <App />
     </ChakraProvider>
   );
 }
 
-export default App;
+export default Game;
