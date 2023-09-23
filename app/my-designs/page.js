@@ -7,7 +7,6 @@ import {
   ChakraProvider,
   Text,
 } from '@chakra-ui/react';
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import Typewriter from 'typewriter-effect';
 
 const questions = [
@@ -60,6 +59,26 @@ const questions = [
     question: 'You encounter a friendly squirrel. Do you trust it or be cautious?',
     options: ['Trust it', 'Be cautious'],
     correctAnswer: 'Be cautious',
+  },
+  {
+    question: 'You discover a hidden cave. Do you enter or walk away?',
+    options: ['Enter', 'Walk away'],
+    correctAnswer: 'Enter',
+  },
+  {
+    question: 'You find a magical potion. Do you drink it or leave it?',
+    options: ['Drink it', 'Leave it'],
+    correctAnswer: 'Drink it',
+  },
+  {
+    question: 'You meet a mysterious traveler. Do you chat with them or avoid them?',
+    options: ['Chat with them', 'Avoid them'],
+    correctAnswer: 'Chat with them',
+  },
+  {
+    question: 'You encounter a rickety bridge. Do you cross it or find another route?',
+    options: ['Cross it', 'Find another route'],
+    correctAnswer: 'Cross it',
   },
 ];
 
@@ -137,12 +156,14 @@ function App() {
   return (
     <ChakraProvider>
       <VStack spacing={4} align="center">
-        <Box>
+        <Box padding="20px" fontFamily="Arial, sans-serif" bgColor="#f0f0f0" borderRadius="10px">
           {gameOver ? (
             <div>
-              <h2>Game Over!</h2>
-              <p>Your Score: {score} / {questions.length}</p>
-              <Button onClick={restartGame}>Restart Game</Button>
+              <h2 style={{ color: 'red' }}>Game Over!</h2>
+              <p style={{ color: 'blue' }}>Your Score: {score} / {questions.length}</p>
+              <Button onClick={restartGame} colorScheme="teal">
+                Restart Game
+              </Button>
             </div>
           ) : (
             <div>
@@ -153,14 +174,15 @@ function App() {
                   loop: false,
                 }}
               />
-              <h2>Question {questionIndex + 1}</h2>
+              <h2 style={{ color: 'green' }}>Question {questionIndex + 1}</h2>
               <p>{questions[questionIndex].question}</p>
               {questions[questionIndex].options.map((option, index) => (
                 <Button
                   key={index}
                   onClick={() => handleAnswer(option)}
-                  leftIcon={<FaCheckCircle />} // Add icon for correct answer
-                  rightIcon={<FaTimesCircle />} // Add icon for incorrect answer
+                  colorScheme="purple"
+                  size="lg"
+                  padding="12px 24px"
                 >
                   {option}
                 </Button>
