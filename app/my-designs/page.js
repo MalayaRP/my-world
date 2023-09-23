@@ -4,8 +4,6 @@ import {
   VStack,
   Box,
   Button,
-  Input,
-  Text,
   ChakraProvider,
 } from '@chakra-ui/react';
 
@@ -15,7 +13,10 @@ function App() {
 
   const handlePointClick = (e) => {
     if (!connecting) {
-      setPoints([...points, { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY }]);
+      const rect = e.target.getBoundingClientRect();
+      const x = e.touches ? e.touches[0].clientX - rect.left : e.clientX - rect.left;
+      const y = e.touches ? e.touches[0].clientY - rect.top : e.clientY - rect.top;
+      setPoints([...points, { x, y }]);
     }
   };
 
@@ -36,7 +37,8 @@ function App() {
         width="500px"
         height="500px"
         border="1px solid #000"
-        onClick={handlePointClick}
+        onTouchStart={handlePointClick}
+        onMouseDown={handlePointClick}
       >
         {points.map((point, index) => (
           <Box
