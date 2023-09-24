@@ -21,61 +21,61 @@ const questions = [
     question: 'You find a fork in the road. Do you go left or right?',
     options: ['Left', 'Right'],
     correctAnswer: 'Right',
-    image: 'https://www.mediafire.com/file/mfkyk8chtymldpw/fork.png',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-ymmYcj7cadoWH6e7yJ65T02RkNoNnFi7TL0bcYs8GkIJpd7cEpoZ2ZlF7nhbkeRYbTWJ0fWvVSC4mLiZ2wKbk-a1PGgQ=s2560',
   },
   {
     question: 'You come across a river. Do you swim across or find a bridge?',
     options: ['Swim across', 'Find a bridge'],
     correctAnswer: 'Find a bridge',
-    image: 'https://www.mediafire.com/file/tps164lp65e7z0e/mountain.png',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-zA7HMl4ncZc1GQm-5Z9lPSQfmEaxXoXJTkoQXhenNrwSq9f4OOSz1Psb20Y_9bym1ODILcGJgxzFKCQp9JsTV0QzC6mg=s2560',
   },
   {
     question: 'You encounter a locked door. Do you pick the lock or find a key?',
     options: ['Pick the lock', 'Find a key'],
     correctAnswer: 'Find a key',
-    image: 'https://www.mediafire.com/file/rq0lhd3vkw8dil5/door.png',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-zuZm5PmO8A-QLOUG9s0qwR9VZ3F6szsGt89xyTPPTwYn1fx_4wVAwU8-ahoMrWIT2GjVLtln7xQe00FkVaCSN-80kdTw=s2560',
   },
   {
     question: 'You see a dragon guarding the castle. Do you approach it or find another way in?',
     options: ['Approach the dragon', 'Find another way in'],
     correctAnswer: 'Find another way in',
-    image: 'https://www.mediafire.com/view/q3f0ks51d3q3hd0/dragon.png/file',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-yr6DtxcdMBAppWDfxBZqqGR9QqHid3o87W7WkGAdLVVz_4rW1VBBlo2YneQ9M8OALKSP1gswDfDNVFE2lX8TK0mwUVTQ=s2560',
   },
   {
     question: 'You find a treasure chest. Do you open it or leave it?',
     options: ['Open it', 'Leave it'],
     correctAnswer: 'Open it',
-    image: 'https://www.mediafire.com/view/ngtj3u9vty5ppli/treasure-chest.png/file',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-xvoDbYkYhljf4BCSye_KySVipZ_cU6BvQwAHRlfwbvFOL5oEEkmEl9eG0_Gch2HXR8JHnbxXufK-3MJ-Z8ZCHQwy8HKA=s2560',
   },
   {
     question: 'You are in a dark cave. Do you use a torch or proceed in darkness?',
     options: ['Use a torch', 'Proceed in darkness'],
     correctAnswer: 'Use a torch',
-    image: 'https://www.mediafire.com/view/os2rsjtlp68vj40/tree.png/file',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-wKozzyNEwyDXOWJtU8Ah9QZTwhHmb6fCYd_Du9QcfJRvNPBLd5HIJDaOIPNrJfhaQ_UlMBLVgu57j1fva5t9anhGYy=s2560',
   },
   {
     question: 'You encounter a talking frog. Do you kiss it or ignore it?',
     options: ['Kiss it', 'Ignore it'],
     correctAnswer: 'Kiss it',
-    image: 'https://www.mediafire.com/view/26yx8tuixgtw2b3/frog.png.download/file',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-xO7RTM4UWYgWbTKEOPkb2xUuaKkczZdWavo5cMV1pOzMFqWG_1-tdCE57oyDwrVxtuTR81wgvIQ2BRQMkg0tzWBzkm=s2560',
   },
   {
     question: 'You reach a high cliff. Do you climb down or find another path?',
     options: ['Climb down', 'Find another path'],
     correctAnswer: 'Find another path',
-    image: 'https://www.mediafire.com/view/3eq7hs3dqqlstrc/squirrel.png/file',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-wyrDiYH5mE0jHytz0I-52ZN2ChFfXo4cnoYRJjWgwBdTGaPsXpQgIjvenVyeTrir04q9VF-qX0UT7mqfcaCXFQ_ji-bA=s2560',
   },
   {
     question: 'You hear a strange noise in the forest. Do you investigate or run away?',
     options: ['Investigate', 'Run away'],
     correctAnswer: 'Investigate',
-    image: 'https://www.mediafire.com/view/xxfbso4wtjvddeg/camping.png/file',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-wL1MVLLXQCCqK18NGoa3vfB7otVMOje7WI3eqyR3AkEwGvCh4s18cOQQHhXplhQUCVqMNmEpOYZcQakGi3CKHo38Zlsg=s2560',
   },
   {
     question: 'You encounter a friendly squirrel. Do you trust it or be cautious?',
     options: ['Trust it', 'Be cautious'],
     correctAnswer: 'Be cautious',
-    image: 'https://www.mediafire.com/view/3eq7hs3dqqlstrc/squirrel.png/file',
+    image: 'https://lh3.googleusercontent.com/drive-viewer/AITFw-w6yGvixt7kt72LxN7XJJNEXi4XNbpmy-nxPlxuCdYFwbno21661rguYrNa-dY4UTtcgRHlX2iU0pyVfynIKbGVwoiD0Q=s2560',
   },
   // Add more questions here
 ];
@@ -95,7 +95,7 @@ const theme = extendTheme({
 });
 
 function Story({ onGameStart }) {
-  const [narrationAudio] = useState(new Audio('https://drive.usercontent.google.com/download?id=1pTjInfyrr3cHzOS0k6aHLuLhL52r7vDO&export=download&authuser=0&confirm=t&uuid=00322561-e96f-4fed-be6b-22de652d7447&at=APZUnTU0oFhQAGIzeScqvOK4s1MA:1695528808104')); // Replace with your narration audio URL
+  const [narrationAudio] = useState(new Audio('https://drive.google.com/uc?export=download&id=1pTjInfyrr3cHzOS0k6aHLuLhL52r7vDO')); // Replace with your narration audio URL
 
   const playNarration = () => {
     narrationAudio.play();
