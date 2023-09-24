@@ -21,19 +21,19 @@ const questions = [
     question: 'You find a fork in the road. Do you go left or right?',
     options: ['Left', 'Right'],
     correctAnswer: 'Right',
-    image: 'https://www.mediafire.com/view/mfkyk8chtymldpw/fork.png/file',
+    image: 'https://www.mediafire.com/file/mfkyk8chtymldpw/fork.png',
   },
   {
     question: 'You come across a river. Do you swim across or find a bridge?',
     options: ['Swim across', 'Find a bridge'],
     correctAnswer: 'Find a bridge',
-    image: 'https://www.mediafire.com/view/26yx8tuixgtw2b3/frog.png.download/file',
+    image: 'https://www.mediafire.com/file/tps164lp65e7z0e/mountain.png',
   },
   {
     question: 'You encounter a locked door. Do you pick the lock or find a key?',
     options: ['Pick the lock', 'Find a key'],
     correctAnswer: 'Find a key',
-    image: 'https://www.mediafire.com/view/rq0lhd3vkw8dil5/door.png/file',
+    image: 'https://www.mediafire.com/file/rq0lhd3vkw8dil5/door.png',
   },
   {
     question: 'You see a dragon guarding the castle. Do you approach it or find another way in?',
@@ -95,7 +95,7 @@ const theme = extendTheme({
 });
 
 function Story({ onGameStart }) {
-  const [narrationAudio] = useState(new Audio('https://www.mediafire.com/file/tm1c1wa4lrbjn3l/Once_upon_a_time_2.wav/file')); // Replace with your narration audio URL
+  const [narrationAudio] = useState(new Audio('https://www.mediafire.com/file/tm1c1wa4lrbjn3l/Once_upon_a_time_2.wav')); // Replace with your narration audio URL
 
   const playNarration = () => {
     narrationAudio.play();
@@ -109,13 +109,13 @@ function Story({ onGameStart }) {
   return (
     <div>
       <Image
-        src="https://www.mediafire.com/view/j1ua2cjc2h4e41f/princess.png/file"
+        src="https://www.mediafire.com/file/j1ua2cjc2h4e41f/princess.png"
         alt="Princess"
         width="200px"
         height="200px"
       />
       <Image
-        src="https://www.mediafire.com/view/q3f0ks51d3q3hd0/dragon.png/file"
+        src="https://www.mediafire.com/file/26yx8tuixgtw2b3/frog.png"
         alt="Dragon"
         width="200px"
         height="200px"
