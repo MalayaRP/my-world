@@ -109,13 +109,13 @@ function Story({ onGameStart }) {
   return (
     <div>
       <Image
-        src="https://www.mediafire.com/file/j1ua2cjc2h4e41f/princess.png"
+        src="https://lh3.googleusercontent.com/drive-viewer/AITFw-xTE0nqPJgOYUXi5qxvmzK8udB5zIUhmodgYx4kcYCxVG07rJ8ZpPNORoGWnJdWoe6MwCJAKQXpiCiW1EQOjXWI_M8P=s2560"
         alt="Princess"
         width="200px"
         height="200px"
       />
       <Image
-        src="https://www.mediafire.com/file/26yx8tuixgtw2b3/frog.png"
+        src="https://lh3.googleusercontent.com/drive-viewer/AITFw-yWfuHtjbRwkzeMtJhdSwqV9RqIbrKMaQeT-98WFeZ6SwnBu3jjSsQBPy70ZiTaSuPNhEY5g_B-YAHa5rkFDrmsL3viUA=s2560"
         alt="Dragon"
         width="200px"
         height="200px"
