@@ -95,7 +95,7 @@ const theme = extendTheme({
 });
 
 function Story({ onGameStart }) {
-  const [narrationAudio] = useState(new Audio('https://download1640.mediafire.com/vthbyilmtdfguW2IhkR14ue5vr0Q3Gr6kI9pAJ0s4sR3v_FH2RoPdvXF2HMWFNTIT65PpHpWJ0dOher_DfV24eKTa-PY1-B84TxX91yKTxFw9hjShuhiktL4PkCgTpI3PFQEYf2Qv5hknxzwlqLjNifjQA_wVIa4I2V_HLxpyuU/tm1c1wa4lrbjn3l/Once+upon+a+time+2.wav')); // Replace with your narration audio URL
+  const [narrationAudio] = useState(new Audio('https://drive.usercontent.google.com/download?id=1pTjInfyrr3cHzOS0k6aHLuLhL52r7vDO&export=download&authuser=0&confirm=t&uuid=00322561-e96f-4fed-be6b-22de652d7447&at=APZUnTU0oFhQAGIzeScqvOK4s1MA:1695528808104')); // Replace with your narration audio URL
 
   const playNarration = () => {
     narrationAudio.play();
